@@ -39,13 +39,13 @@ python-js-runtime/
 
 ## Installation
 
-Use Python 3.10 or newer.
+Use Python 3.9 or newer.
 
 ```bash
-python -m venv .venv
+python3 -m venv .venv
 source .venv/bin/activate
-python -m pip install -r requirements.txt
-python -m pip install -e .
+python3 -m pip install -r requirements.txt
+python3 -m pip install -e .
 ```
 
 ## Running JavaScript
@@ -54,6 +54,12 @@ Run from a file:
 
 ```bash
 pyjs samples/test1_odd_even.js
+```
+
+If the `pyjs` command is unavailable, run:
+
+```bash
+PYTHONPATH=src python3 -m js_runtime samples/test1_odd_even.js
 ```
 
 Run from stdin:
