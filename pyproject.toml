@@ -1,0 +1,17 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "python-js-runtime"
+version = "1.0.0"
+description = "A Python command-line JavaScript runtime backed by QuickJS."
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = ["quickjs>=1.19.4"]
+
+[project.scripts]
+pyjs = "js_runtime.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
