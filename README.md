@@ -25,6 +25,18 @@ This project is a hackathon-ready JavaScript runtime written primarily in Python
 - Supports hidden-test scenarios with additional automated test coverage
 - Friendly error handling with descriptive runtime errors
 
+### Runtime Analytics
+
+The runtime can optionally print execution statistics:
+
+- Execution time
+- Memory limit
+- Number of output lines
+- Input size in bytes
+
+Example:
+
+pyjs --stats file.js
 
 ## Architecture
 

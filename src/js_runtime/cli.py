@@ -91,5 +91,6 @@ def main(argv: list[str] | None = None) -> int:
         sys.stdout.write(f"Time: {elapsed_ms:.2f} ms\n")
         sys.stdout.write(f"Memory Limit: {args.memory} MB\n")
         sys.stdout.write(f"Output Lines: {len(output.splitlines()) if output else 0}\n")
+        sys.stdout.write(f"Input Size: {len(source)} bytes\n")
 
     return 0
