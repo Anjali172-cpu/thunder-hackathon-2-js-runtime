@@ -283,3 +283,14 @@ Recommended improvements:
 ## Submission Notes
 
 For GitHub submission, commit the entire directory. The evaluator can install dependencies, run `pyjs file.js`, or run the test suite with `PYTHONPATH=src python3 -m pytest`
+
+## Screenshots
+
+### Help Command
+![Help](screenshots/help.png)
+
+### Runtime Statistics
+![Stats](screenshots/stats.png)
+
+### Test Suite
+![Tests](screenshots/tests.png)
