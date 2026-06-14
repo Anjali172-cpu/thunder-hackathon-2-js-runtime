@@ -55,7 +55,15 @@ Check version:
 ```bash
 python3 -m src.js_runtime --version
 ```
+
+Check help:
+
+```bash
+python3 -m src.js_runtime --help
+```
+
 Run from a file:
+
 
 ```bash
 pyjs samples/test1_odd_even.js
@@ -204,11 +212,13 @@ Example:
 ```bash
 echo 'let x = ;' | pyjs
 ```
+
 If the `pyjs` command is unavailable:
 
 ```bash
 echo 'let x = ;' | PYTHONPATH=src python3 -m js_runtime
 ```
+
 Output on stderr:
 
 ```text
