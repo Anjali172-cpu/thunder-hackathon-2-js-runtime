@@ -30,17 +30,22 @@ CONSOLE_BOOTSTRAP = r"""
     if (value === undefined) return "undefined";
     if (value === null) return "null";
 
-    const type = typeof value;
+  const type = typeof value;
+
+  function formatArrayItem(item) {
+    if (item === undefined) return "undefined";
+    if (item === null) return "null";
+    if (typeof item === "string") return "'" + item + "'";
+    return formatValue(item);
+  }
     if (type === "string") return value;
     if (type === "number" || type === "bigint") return String(value);
     if (type === "boolean") return value ? "true" : "false";
     if (type === "function") return value.toString();
 
-    if (Array.isArray(value)) {
-      return value.map(function (item) {
-        return item === undefined || item === null ? "" : formatValue(item);
-      }).join(",");
-    }
+  if (Array.isArray(value)) {
+    return "[ " + value.map(formatArrayItem).join(", ") + " ]";
+  }
 
     try {
       return JSON.stringify(value);
