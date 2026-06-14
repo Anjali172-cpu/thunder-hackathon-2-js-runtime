@@ -1,16 +1,30 @@
-## Features
-
-- Execute real JavaScript using QuickJS
-- File and stdin execution support
-- Console output capture
-- Timeout and memory limits
-- Python package and CLI support
-- Automated tests with pytest
-
-
 # Python JavaScript Runtime
 
 This project is a hackathon-ready JavaScript runtime written primarily in Python. It embeds the QuickJS engine, so Python handles input, output, limits, errors, and the command line, while QuickJS executes real JavaScript syntax and built-ins.
+
+
+## Features
+
+- Executes real JavaScript using the embedded QuickJS engine
+- Supports execution from JavaScript files and standard input (stdin)
+- Captures and prints `console.log()` output
+- Configurable execution timeout limits
+- Configurable memory limits
+- Command-line interface (`pyjs`) and Python package support
+- Node-style array console formatting
+- Supports modern JavaScript features including:
+  - `let` and `const`
+  - Arrays and objects
+  - Functions and arrow functions
+  - Callbacks
+  - Spread and rest operators
+  - `Math` and `Date`
+  - Loops and conditional statements
+  - Common string and array methods
+- Comprehensive automated test suite with hidden-feature coverage using `pytest`
+- Supports hidden-test scenarios with additional automated test coverage
+- Friendly error handling with descriptive runtime errors
+
 
 ## Architecture
 
@@ -73,7 +87,6 @@ python3 -m src.js_runtime --help
 ```
 
 Run from a file:
-
 
 ```bash
 pyjs samples/test1_odd_even.js
