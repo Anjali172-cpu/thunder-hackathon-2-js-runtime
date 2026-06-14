@@ -50,6 +50,11 @@ python3 -m pip install -e .
 
 ## Running JavaScript
 
+Check version:
+
+```bash
+python3 -m src.js_runtime --version
+```
 Run from a file:
 
 ```bash
@@ -71,7 +76,7 @@ echo 'console.log("Hello " + "JS");' | pyjs
 Run without installing the console script:
 
 ```bash
-PYTHONPATH=src python -m js_runtime samples/test1_odd_even.js
+PYTHONPATH=src python3 -m js_runtime samples/test1_odd_even.js
 ```
 
 ## Public Hackathon Samples
@@ -117,7 +122,7 @@ Note: the hackathon PDF/table appears to show extra spaces or bold formatting in
 ## Running Tests
 
 ```bash
-PYTHONPATH=src pytest
+PYTHONPATH=src python3 -m pytest
 ```
 
 ## File-by-File Explanation
@@ -144,7 +149,7 @@ This file makes `js_runtime` a package and re-exports `JavaScriptRuntime` and `J
 
 ### `src/js_runtime/__main__.py`
 
-This file lets users run the package with `python -m js_runtime`.
+This file lets users run the package with `python3 -m js_runtime`.
 
 `from .cli import main` imports the CLI function.
 
@@ -199,7 +204,11 @@ Example:
 ```bash
 echo 'let x = ;' | pyjs
 ```
+If the `pyjs` command is unavailable:
 
+```bash
+echo 'let x = ;' | PYTHONPATH=src python3 -m js_runtime
+```
 Output on stderr:
 
 ```text
@@ -228,4 +237,4 @@ Recommended improvements:
 
 ## Submission Notes
 
-For GitHub submission, commit the entire directory. The evaluator can install dependencies, run `pyjs file.js`, or run the test suite with `PYTHONPATH=src pytest`.
+For GitHub submission, commit the entire directory. The evaluator can install dependencies, run `pyjs file.js`, or run the test suite with `PYTHONPATH=src python3 -m pytest`

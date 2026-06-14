@@ -32,6 +32,11 @@ def build_parser() -> argparse.ArgumentParser:
         default=64,
         help="Maximum QuickJS heap memory in megabytes. Default: 64.",
     )
+    parser.add_argument(
+    "--version",
+    action="version",
+    version="pyjs 1.0.0",
+    )
     return parser
 
 
