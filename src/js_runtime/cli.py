@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import argparse
 import sys
+import time
 from pathlib import Path
 
 from .engine import JavaScriptExecutionError, JavaScriptRuntime
@@ -33,10 +34,16 @@ def build_parser() -> argparse.ArgumentParser:
         help="Maximum QuickJS heap memory in megabytes. Default: 64.",
     )
     parser.add_argument(
+    "--stats",
+    action="store_true",
+    help="Print execution statistics after running the JavaScript code.",
+)
+    parser.add_argument(
     "--version",
     action="version",
     version="pyjs 1.0.0",
     )
+   
     return parser
 
 
@@ -57,6 +64,8 @@ def main(argv: list[str] | None = None) -> int:
     parser = build_parser()
     args = parser.parse_args(argv)
 
+    start_time = time.perf_counter()
+
     try:
         source = read_source(args.file)
         runtime = JavaScriptRuntime(
@@ -68,11 +77,19 @@ def main(argv: list[str] | None = None) -> int:
         print(f"JavaScriptRuntimeError: {exc}", file=sys.stderr)
         return 1
 
+    elapsed_ms = (time.perf_counter() - start_time) * 1000
+
     if runtime.has_output:
         sys.stdout.write(output)
         sys.stdout.write("\n")
+
+    if args.stats:
+        if runtime.has_output:
+            sys.stdout.write("\n")
+        sys.stdout.write("Execution Stats\n")
+        sys.stdout.write("---------------\n")
+        sys.stdout.write(f"Time: {elapsed_ms:.2f} ms\n")
+        sys.stdout.write(f"Memory Limit: {args.memory} MB\n")
+        sys.stdout.write(f"Output Lines: {len(output.splitlines()) if output else 0}\n")
+
     return 0
-
-
-if __name__ == "__main__":
-    raise SystemExit(main())
