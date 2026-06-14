@@ -3,6 +3,11 @@
 
 A lightweight JavaScript runtime built in Python using the embedded QuickJS engine. It executes real JavaScript code, captures console output, enforces resource limits, and provides a clean command-line interface with execution statistics and automated testing.
 
+![Python](https://img.shields.io/badge/Python-3.9%2B-blue)
+![QuickJS](https://img.shields.io/badge/Engine-QuickJS-green)
+![Tests](https://img.shields.io/badge/Tests-12_Passed-brightgreen)
+![CLI](https://img.shields.io/badge/CLI-pyjs-orange)
+
 ## Features
 
 - Executes real JavaScript using the embedded QuickJS engine
@@ -40,14 +45,59 @@ pyjs --stats file.js
 
 ## Architecture
 
-The runtime has four layers:
+The runtime follows a simple four-layer execution pipeline:
 
-1. Input layer: `src/js_runtime/cli.py` reads JavaScript from a file path or from stdin.
-2. Execution layer: `src/js_runtime/engine.py` creates a `quickjs.Context`, applies safety limits, injects a `console` object, and evaluates the JavaScript.
-3. Console capture layer: JavaScript `console.log(...)` pushes formatted strings into a JavaScript array named `globalThis.__python_console_lines`.
-4. Output layer: the CLI prints the captured lines to stdout exactly once, separated by newline characters.
+1. **Input Layer (`cli.py`)**
+   - Reads JavaScript code from a file or standard input (`stdin`).
 
-This approach is stronger than hand-writing a parser because QuickJS already supports modern JavaScript features such as `let`, `const`, arrays, objects, functions, arrow functions, callbacks, spread/rest operators, `Math`, `Date`, loops, `switch`, and common string/array methods.
+2. **Execution Layer (`engine.py`)**
+   - Creates a `quickjs.Context`
+   - Applies timeout and memory limits
+   - Injects the custom `console` implementation
+   - Executes the JavaScript code
+
+3. **Console Capture Layer**
+   - `console.log(...)` stores formatted output inside
+     `globalThis.__python_console_lines`.
+
+4. **Output Layer**
+   - Reads the captured console lines and prints them to `stdout`.
+
+QuickJS provides real JavaScript semantics, allowing the runtime to support modern JavaScript features such as variables, arrays, objects, functions, callbacks, loops, `Math`, `Date`, spread/rest operators, and common string and array methods.
+
+```text
+┌─────────────────────────┐
+│ JavaScript File / stdin │
+└────────────┬────────────┘
+             │
+             ▼
+        ┌────────┐
+        │ cli.py │
+        └────┬───┘
+             │
+             ▼
+      ┌────────────┐
+      │ engine.py  │
+      └─────┬──────┘
+            │
+            ▼
+    ┌────────────────┐
+    │ QuickJS Context│
+    └───────┬────────┘
+            │
+            ▼
+    ┌────────────────┐
+    │ console.log()  │
+    └───────┬────────┘
+            │
+            ▼
+ ┌───────────────────────┐
+ │ __python_console_lines│
+ └───────────┬───────────┘
+             │
+             ▼
+          stdout
+```
 
 ## Project Structure
 
