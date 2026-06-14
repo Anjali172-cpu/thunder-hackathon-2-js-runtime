@@ -98,3 +98,55 @@ def test_errors_are_wrapped():
         assert "SyntaxError" in str(exc)
     else:
         raise AssertionError("Expected JavaScriptExecutionError")
+
+def test_object_access():
+    assert run_js(
+        """
+        let person = {
+          name: "Anjali",
+          age: 24
+        };
+        console.log(person.name);
+        console.log(person.age);
+        """
+    ) == "Anjali\n24"
+
+
+def test_array_methods():
+    assert run_js(
+        """
+        let nums = [1, 2, 3, 4, 5];
+        console.log(nums.includes(3));
+        console.log(nums.indexOf(4));
+        console.log(nums.slice(1, 4).join(","));
+        """
+    ) == "true\n3\n2,3,4"
+
+
+def test_arrow_function():
+    assert run_js(
+        """
+        const square = (x) => x * x;
+        console.log(square(6));
+        """
+    ) == "36"
+
+
+def test_string_methods():
+    assert run_js(
+        """
+        let str = "  Hello JavaScript  ";
+        console.log(str.trim());
+        console.log(str.toUpperCase().includes("JAVA"));
+        """
+    ) == "Hello JavaScript\ntrue"
+
+
+def test_spread_operator():
+    assert run_js(
+        """
+        let arr1 = [1, 2];
+        let arr2 = [...arr1, 3, 4];
+        console.log(arr2.join(","));
+        """
+    ) == "1,2,3,4"
