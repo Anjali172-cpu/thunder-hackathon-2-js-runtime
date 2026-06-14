@@ -1,7 +1,7 @@
+
 # Python JavaScript Runtime
 
-This project is a hackathon-ready JavaScript runtime written primarily in Python. It embeds the QuickJS engine, so Python handles input, output, limits, errors, and the command line, while QuickJS executes real JavaScript syntax and built-ins.
-
+A lightweight JavaScript runtime built in Python using the embedded QuickJS engine. It executes real JavaScript code, captures console output, enforces resource limits, and provides a clean command-line interface with execution statistics and automated testing.
 
 ## Features
 
