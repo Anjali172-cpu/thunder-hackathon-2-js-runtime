@@ -1,4 +1,5 @@
 
+
 # Python JavaScript Runtime
 
 A lightweight JavaScript runtime built in Python using the embedded QuickJS engine. It executes real JavaScript code, captures console output, enforces resource limits, and provides a clean command-line interface with execution statistics and automated testing.
@@ -17,6 +18,7 @@ A lightweight JavaScript runtime built in Python using the embedded QuickJS engi
 - Configurable memory limits
 - Command-line interface (`pyjs`) and Python package support
 - Node-style array console formatting
+- Optional runtime analytics via the `--stats` command
 - Supports modern JavaScript features including:
   - `let` and `const`
   - Arrays and objects
@@ -30,6 +32,29 @@ A lightweight JavaScript runtime built in Python using the embedded QuickJS engi
 - Supports hidden-test scenarios with additional automated test coverage
 - Friendly error handling with descriptive runtime errors
 
+
+## Design Goals
+
+- Execute real JavaScript semantics
+- Keep the runtime lightweight
+- Provide safe execution limits
+- Support automated testing
+- Remain easy to extend
+
+## Why QuickJS?
+
+Instead of implementing a custom JavaScript parser and interpreter from scratch, this project embeds the QuickJS engine. QuickJS provides real JavaScript semantics, while Python handles:
+
+- Input handling
+- Resource limits
+- Error handling
+- Console output capture
+- Command-line tooling
+- Automated testing infrastructure
+
+This makes the runtime lightweight, reliable, and easier to extend.
+
+
 ### Runtime Analytics
 
 The runtime can optionally print execution statistics:
@@ -41,7 +66,9 @@ The runtime can optionally print execution statistics:
 
 Example:
 
+```bash
 pyjs --stats file.js
+```
 
 ## Architecture
 
@@ -86,9 +113,9 @@ QuickJS provides real JavaScript semantics, allowing the runtime to support mode
     └───────┬────────┘
             │
             ▼
-    ┌────────────────┐
-    │ console.log()  │
-    └───────┬────────┘
+ ┌───────────────────────┐
+ │  console bootstrap    │
+ └───────────┬───────────┘
             │
             ▼
  ┌───────────────────────┐
@@ -310,7 +337,7 @@ Output on stderr:
 JavaScriptRuntimeError: SyntaxError: unexpected token in expression: ';'
 ```
 
-## Hidden Test Robustness
+## JavaScript Feature Coverage
 
 This runtime should handle the listed hidden-case topics because QuickJS implements real JavaScript semantics for:
 
@@ -321,20 +348,19 @@ This runtime should handle the listed hidden-case topics because QuickJS impleme
 - string methods such as `split`, `join`, `replace`, `slice`, `substring`, `trim`, and case conversion
 - `Math`, `Date`, callbacks, arrow functions, spread, and rest
 
-Recommended improvements:
+## Future Improvements
 
-- Add deterministic `Math.random()` support if the judge expects fixed random outputs.
-- Add a Node-like `console.log` formatter for complex nested objects if hidden tests log raw objects or arrays directly.
-- Add optional input functions such as `prompt()` or `readline()` if the hackathon later includes interactive input.
-- Add module loading only if required; currently the runtime is intentionally single-file/snippet oriented.
-- Add more tests for thrown errors, nested arrays, object logging, sorting numbers with callbacks, and date formatting.
-- Package a `Dockerfile` so judges can run the same Python and QuickJS versions every time.
+- Enhanced formatting for deeply nested objects
+- Optional interactive input support
+- Additional runtime benchmarks and stress tests
 
 ## Submission Notes
 
 For GitHub submission, commit the entire directory. The evaluator can install dependencies, run `pyjs file.js`, or run the test suite with `PYTHONPATH=src python3 -m pytest`
 
 ## Screenshots
+
+The following screenshots demonstrate the command-line interface, runtime statistics, and automated test execution.
 
 ### Help Command
 ![Help](screenshots/help.png)
